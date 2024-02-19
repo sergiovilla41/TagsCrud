@@ -48,6 +48,10 @@ namespace Simem.AppCom.Datos.Core
 
             return datosDto;
         }
+        public void DeleteDatosById(Guid id)
+        {
+            repo.DeleteDatosById(id);
+        }
 
     }
 }

@@ -118,7 +118,7 @@ namespace Simem.AppCom.Datos.Repo
 
             return response;
         }
-        ///get all
+        ///Get all
         public List<ConjuntoDatosDto> GetDatosDto()
         {
             var datos = (from gae in  _baseContext.GeneracionArchivoEtiqueta
@@ -134,7 +134,7 @@ namespace Simem.AppCom.Datos.Repo
 
             return datos;
         }
-        //get Id
+        //Get Id
         public List<ConjuntoDatosDto> GetDatosDtoById(Guid id)
         {
             var datos = (from gae in _baseContext.GeneracionArchivoEtiqueta
@@ -151,6 +151,30 @@ namespace Simem.AppCom.Datos.Repo
 
             return datos;
         }
+        //Delete
+
+        public void DeleteDatosById(Guid id)
+        {
+            
+            var generacionArchivoEtiquetasAEliminar = _baseContext.GeneracionArchivoEtiqueta
+                .Where(gae => gae.IdConfiguracionGeneracionArchivoxEtiqueta == id);
+            _baseContext.GeneracionArchivoEtiqueta.RemoveRange(generacionArchivoEtiquetasAEliminar);
+
+           
+            var etiquetasAEliminar = _baseContext.Etiqueta
+                .Where(e => e.Id == id);
+            _baseContext.Etiqueta.RemoveRange(etiquetasAEliminar);
+
+            var generacionArchivosAEliminar = _baseContext.GeneracionArchivo
+                .Where(ga => ga.IdConfiguracionGeneracionArchivos == id);
+            _baseContext.GeneracionArchivo.RemoveRange(generacionArchivosAEliminar);
+
+           
+            _baseContext.SaveChanges();
+        }
+
+
+
     }
-        
+
 }

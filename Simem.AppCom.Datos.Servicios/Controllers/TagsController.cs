@@ -185,7 +185,24 @@ namespace Simem.AppCom.Datos.Servicios.Controllers
                 return BadRequest(new { messageError = $"Error: {ex.Message}" });
             }
         }
-    }  
+        [HttpDelete("C/{id}")]
+        public async Task<IActionResult> DeleteDatosById(Guid id)
+        {
+            try
+            {
+                Etiqueta core = new Etiqueta();
+                core.DeleteDatosById(id);
+                return Ok(new { message = "Datos eliminados correctamente" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { messageError = $"Error: {ex.Message}" });
+            }
+        }
+
+
+
+    }
 
 }
 
