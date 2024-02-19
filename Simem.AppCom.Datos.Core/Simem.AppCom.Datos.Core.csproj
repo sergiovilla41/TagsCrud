@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SendGrid" Version="9.28.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Simem.AppCom.Base.Interfaces\Simem.AppCom.Base.Interfaces.csproj" />
+    <ProjectReference Include="..\Simem.AppCom.Datos.Dominio\Simem.AppCom.Datos.Dominio.csproj" />
+    <ProjectReference Include="..\SImem.AppCom.Datos.Dto\SImem.AppCom.Datos.Dto.csproj" />
+    <ProjectReference Include="..\Simem.AppCom.Datos.Repo\Simem.AppCom.Datos.Repo.csproj" />
+  </ItemGroup>
+
+</Project>

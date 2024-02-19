@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.30.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.30.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mapeos\Mapeos.csproj" />
+    <ProjectReference Include="..\Simem.AppCom.Base.Repo\Simem.AppCom.Base.Repo.csproj" />
+    <ProjectReference Include="..\Simem.AppCom.Datos.Dominio\Simem.AppCom.Datos.Dominio.csproj" />
+    <ProjectReference Include="..\SImem.AppCom.Datos.Dto\SImem.AppCom.Datos.Dto.csproj" />
+  </ItemGroup>
+
+</Project>

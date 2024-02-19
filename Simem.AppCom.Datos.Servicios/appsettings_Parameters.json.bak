@@ -1,0 +1,45 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "values": {
+    "ASPNETCORE_ENVIRONMENT": "Development",
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "AzureStorage": "AzureStorage",
+    "StorageContainer": "StorageContainerSimem",
+    "PQEEndpoint": "PQEEndpoint",
+    "user_pqr": "user-pqr",
+    "pass_pqr": "pass-pqr",
+    "SimemConnection": "SimemConnection",
+    "AzureKeyVaultUri": "https://kvsimemprb02.vault.azure.net/",
+    "JwtKey": "JwtKey",
+    "ClBuzonPQR": "ClBuzonPQR",
+    "BuzonPQR": "BuzonPQR",
+    "urlCrmLogin": "urlCrmLogin",
+    "urlCrmData": "urlCrmData",
+    "crmStatus": "crmStatus",
+    "crmModuleName": "crmModuleName",
+    "crmWindow": "crmWindow",
+    "crmWorkTeam": "crmWorkTeam",
+    "crmPriority": "crmPriority",
+    "secretKeyJWT": "secretKeyJWT",
+    "clientId": "ZQA5ADQANAA2AGIANwAyAC0AOAA3AGMAYgAtADQANQAyADEALQA4ADkAYgBmAC0AZgAwAGYANQBhADAAYwA2AGEAZQAzADUA",
+    "clientSecret": "VgBHAGgAOABRAH4AVwBQAH4AQgBSAFQAUABqADgARQBNAHIAWABuAG0AZABIAHoAZQBiAEkAVgBCAEUAagBPAEMAVgBqAFgASQBjAFAAUgA=",
+    "tenantId": "YwA5ADgAMABlADQAMQAwAC0AMABiADUAYwAtADQAOABiAGMALQBiAGQAMQBhAC0AOABiADkAMQBjAGEAYgBjADgANABiAGMA",
+    "Pipeline": "false",
+    "ContactanosFalla": "ContactanosFalla",
+    "DocumentalUser": "DocumentalUser",
+    "DocumentalPass": "DocumentalPass",
+    "DocumentalUrl": "DocumentalUrl",
+    "DocumentalClaseDocumental": "DocumentalClaseDocumental",
+    "DocumentalDebeResponder": "DocumentalDebeResponder",
+    "DocumentalDependencia": "DocumentalDependencia",
+    "DocumentalMedioRecibido": "DocumentalMedioRecibido",
+    "UrlContactanos": "UrlContactanos"
+  },
+  "AllowedHosts": "*"
+}
