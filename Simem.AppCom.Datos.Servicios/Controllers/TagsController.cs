@@ -163,7 +163,7 @@ namespace Simem.AppCom.Datos.Servicios.Controllers
             try
             {
                 Etiqueta core = new Etiqueta();
-                var datosDto =  core.GetDatosDto();
+                var datosDto = await core.GetDatosDto(); // Llama al método asincrónico
                 return Ok(datosDto);
             }
             catch (Exception ex)
@@ -171,13 +171,21 @@ namespace Simem.AppCom.Datos.Servicios.Controllers
                 return BadRequest(new { messageError = $"Error: {ex.Message}" });
             }
         }
+        /// <summary>
+        /// Se utiliza para buscar un conjunto de datos asociados para la etiqueta
+        /// </summary>
+        /// <param name="Id">Id de la tabla GeneracionArchivoEtiqueta</param>
+        /// <returns></returns>
+        /// <response code="200">La consulta correspondiente con el id ingresado</response>
+        /// <response code="204">No se encontre informacion</response>
+        /// <response code="400">Hubo un error en la petición</response>
         [HttpGet("ById/{id}")]
         public async Task<IActionResult> GetDatosById(Guid id)
         {
             try
             {
                 Etiqueta core = new Etiqueta();
-                var datosDto = core.GetDatosDtoById(id);
+                var datosDto = await core.GetDatosDtoById(id);
                 return Ok(datosDto);
             }
             catch (Exception ex)
@@ -185,14 +193,22 @@ namespace Simem.AppCom.Datos.Servicios.Controllers
                 return BadRequest(new { messageError = $"Error: {ex.Message}" });
             }
         }
-        [HttpDelete("C/{id}")]
+        // <summary>
+        /// Se utiliza para eliminar una etiqueta con el conjunto de datos asociado
+        /// </summary>
+        /// <param name="id">Id de la tabla GeneracionArchivoEtiqueta</param>
+        /// <returns></returns>
+        /// <response code="200">El conjunto de datos se eliminó correctamente</response>
+        /// <response code="204">No se encontro informacion</response>
+        /// <response code="400">Hubo un error en la petición</response>
+        [HttpDelete("C-Datos/{id}")]
         public async Task<IActionResult> DeleteDatosById(Guid id)
         {
             try
             {
                 Etiqueta core = new Etiqueta();
-                core.DeleteDatosById(id);
-                return Ok(new { message = "Datos eliminados correctamente" });
+               await core.DeleteDatosById(id);
+                return Ok(new { message = "El conjunto de datos se eliminó correctamente" });
             }
             catch (Exception ex)
             {

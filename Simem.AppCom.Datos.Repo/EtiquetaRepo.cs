@@ -119,59 +119,66 @@ namespace Simem.AppCom.Datos.Repo
             return response;
         }
         ///Get all
-        public List<ConjuntoDatosDto> GetDatosDto()
+        public async Task<List<ConjuntoDatosDto>> GetDatosDto()
         {
-            var datos = (from gae in  _baseContext.GeneracionArchivoEtiqueta
-                         join e in _baseContext.Etiqueta on gae.EtiquetaId equals e.Id
-                         join ga in _baseContext.GeneracionArchivo on gae.IdConfiguracionGeneracionArchivo equals ga.IdConfiguracionGeneracionArchivos
-                         select new ConjuntoDatosDto
-                         {
-                             Id = gae.IdConfiguracionGeneracionArchivoxEtiqueta,
-                             Titulo = e.Titulo,
-                             Estado = e.Estado,
-                             ConjuntoDeDatosAsociados = ga.Titulo
-                         }).ToList();
+            var datos = await (from gae in _baseContext.GeneracionArchivoEtiqueta
+                               join e in _baseContext.Etiqueta on gae.EtiquetaId equals e.Id
+                               join ga in _baseContext.GeneracionArchivo on gae.IdConfiguracionGeneracionArchivo equals ga.IdConfiguracionGeneracionArchivos
+                               select new ConjuntoDatosDto
+                               {
+                                   Id = gae.IdConfiguracionGeneracionArchivoxEtiqueta,
+                                   Titulo = e.Titulo,
+                                   Estado = e.Estado,
+                                   ConjuntoDeDatosAsociados = ga.Titulo
+                               }).ToListAsync();
 
             return datos;
         }
+
         //Get Id
-        public List<ConjuntoDatosDto> GetDatosDtoById(Guid id)
+        public async Task<List<ConjuntoDatosDto>> GetDatosDtoById(Guid id)
         {
-            var datos = (from gae in _baseContext.GeneracionArchivoEtiqueta
-                         join e in _baseContext.Etiqueta on gae.EtiquetaId equals e.Id
-                         join ga in _baseContext.GeneracionArchivo on gae.IdConfiguracionGeneracionArchivo equals ga.IdConfiguracionGeneracionArchivos
-                         where gae.IdConfiguracionGeneracionArchivoxEtiqueta == id
-                         select new ConjuntoDatosDto
-                         {
-                             Id = gae.IdConfiguracionGeneracionArchivoxEtiqueta,
-                             Titulo = e.Titulo,
-                             Estado = e.Estado,
-                             ConjuntoDeDatosAsociados = ga.Titulo
-                         }).ToList();
+            var datos = await (from gae in _baseContext.GeneracionArchivoEtiqueta
+                               join e in _baseContext.Etiqueta on gae.EtiquetaId equals e.Id
+                               join ga in _baseContext.GeneracionArchivo on gae.IdConfiguracionGeneracionArchivo equals ga.IdConfiguracionGeneracionArchivos
+                               where gae.IdConfiguracionGeneracionArchivoxEtiqueta == id
+                               select new ConjuntoDatosDto
+                               {
+                                   Id = gae.IdConfiguracionGeneracionArchivoxEtiqueta,
+                                   Titulo = e.Titulo,
+                                   Estado = e.Estado,
+                                   ConjuntoDeDatosAsociados = ga.Titulo
+                               }).ToListAsync();
 
             return datos;
         }
         //Delete
 
-        public void DeleteDatosById(Guid id)
+        public async Task DeleteDatosById(Guid id)
         {
-            
-            var generacionArchivoEtiquetasAEliminar = _baseContext.GeneracionArchivoEtiqueta
-                .Where(gae => gae.IdConfiguracionGeneracionArchivoxEtiqueta == id);
+            // Elimina los registros de GeneracionArchivoEtiqueta de manera asincrónica
+            var generacionArchivoEtiquetasAEliminar = await _baseContext.GeneracionArchivoEtiqueta
+                .Where(gae => gae.IdConfiguracionGeneracionArchivoxEtiqueta == id)
+                .ToListAsync();
             _baseContext.GeneracionArchivoEtiqueta.RemoveRange(generacionArchivoEtiquetasAEliminar);
 
-           
-            var etiquetasAEliminar = _baseContext.Etiqueta
-                .Where(e => e.Id == id);
+            // Elimina los registros de Etiqueta de manera asincrónica
+            var etiquetasAEliminar = await _baseContext.Etiqueta
+                .Where(e => e.Id == id)
+                .ToListAsync();
             _baseContext.Etiqueta.RemoveRange(etiquetasAEliminar);
 
-            var generacionArchivosAEliminar = _baseContext.GeneracionArchivo
-                .Where(ga => ga.IdConfiguracionGeneracionArchivos == id);
+            // Elimina los registros de GeneracionArchivo de manera asincrónica
+            var generacionArchivosAEliminar = await _baseContext.GeneracionArchivo
+                .Where(ga => ga.IdConfiguracionGeneracionArchivos == id)
+                .ToListAsync();
+
             _baseContext.GeneracionArchivo.RemoveRange(generacionArchivosAEliminar);
 
-           
-            _baseContext.SaveChanges();
+            // Guarda los cambios en la base de datos de manera asincrónica
+            await _baseContext.SaveChangesAsync();
         }
+
 
 
 

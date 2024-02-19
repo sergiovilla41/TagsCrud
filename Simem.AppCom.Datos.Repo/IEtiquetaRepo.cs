@@ -14,7 +14,8 @@ namespace Simem.AppCom.Datos.Repo
         public Task NewTag(EnlaceDto entityDto);
         public Task DeleteTag(Guid idRegistry);
         public Task<bool> ModifyTag(EnlaceDto entityDto);
-        public List<ConjuntoDatosDto> GetDatosDto();
-        public List<ConjuntoDatosDto> GetDatosDtoById(Guid id);
+        public Task<List<ConjuntoDatosDto>> GetDatosDto();        
+        public Task<List<ConjuntoDatosDto>> GetDatosDtoById(Guid id);
+        public Task DeleteDatosById(Guid id);
     }
 }

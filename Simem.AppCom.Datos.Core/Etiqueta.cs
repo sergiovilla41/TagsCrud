@@ -35,22 +35,21 @@ namespace Simem.AppCom.Datos.Core
         public Task DeleteTag(Guid idRegistry) { return repo.DeleteTag(idRegistry); }
         public Task<bool> ModifyTag(EnlaceDto entityDto) { return repo.ModifyTag(entityDto); }
 
-        public List<ConjuntoDatosDto> GetDatosDto()
+        public async Task<List<ConjuntoDatosDto>> GetDatosDto()
         {
-            var datos = repo.GetDatosDto(); 
-
+            var datos = await repo.GetDatosDto();
             return datos;
         }
 
-        public List<ConjuntoDatosDto> GetDatosDtoById(Guid id)
+        public async Task<List<ConjuntoDatosDto>> GetDatosDtoById(Guid id)
         {
-            var datosDto = repo.GetDatosDtoById(id); 
+            var datosDto = await repo.GetDatosDtoById(id); 
 
             return datosDto;
         }
-        public void DeleteDatosById(Guid id)
+        public async Task DeleteDatosById(Guid id)
         {
-            repo.DeleteDatosById(id);
+            await repo.DeleteDatosById(id);
         }
 
     }
