@@ -152,7 +152,7 @@ namespace Simem.AppCom.Datos.Repo
 
             return datos;
         }
-        //Delete
+        //Delete-Id
 
         public async Task DeleteDatosById(Guid id)
         {
@@ -179,7 +179,68 @@ namespace Simem.AppCom.Datos.Repo
             await _baseContext.SaveChangesAsync();
         }
 
+        //Post-Tags
+        public async Task AddDatosDtoAsync(ConjuntoDatosDto nuevoConjuntoDatos)
+        {
+            try
+            {
+                // Buscar si el título de la etiqueta ya existe en la base de datos
+                var etiquetaExistente = await _baseContext.Etiqueta.FirstOrDefaultAsync(e => e.Titulo == nuevoConjuntoDatos.Titulo);
 
+                Guid etiquetaId;
+                // Si la etiqueta no existe, crea una nueva y obtén su ID
+                if (etiquetaExistente == null )
+                {
+                    var nuevaEtiqueta = new Etiqueta
+                    {
+                        Titulo = nuevoConjuntoDatos.Titulo,
+                        Estado = nuevoConjuntoDatos.Estado 
+                                                    
+                    };
+
+                    _baseContext.Etiqueta.Add(nuevaEtiqueta);
+                    await _baseContext.SaveChangesAsync();
+
+                    etiquetaId = nuevaEtiqueta.Id ?? Guid.Empty;
+                }
+                else
+                {
+                    etiquetaId = etiquetaExistente.Id ?? Guid.Empty;
+                }
+
+                // Buscar si el conjunto de datos ya existe en la base de datos
+                var generacionArchivoExistente = await _baseContext.GeneracionArchivo.FirstOrDefaultAsync(ga => ga.Titulo == nuevoConjuntoDatos.ConjuntoDeDatosAsociados);
+
+                Guid generacionArchivoId;
+                // Si el conjunto de datos no existe, devuelve un error o toma alguna otra acción según sea necesario
+                if (generacionArchivoExistente == null)
+                {
+                    throw new FileNotFoundException("El conjunto de datos seleccionado no existe en la base de datos.");
+                    
+                }
+                else
+                {
+                    generacionArchivoId = generacionArchivoExistente.IdConfiguracionGeneracionArchivos;
+                }
+
+                // Crear una nueva entrada en la tabla intermedia usando los GUIDs obtenidos
+                var nuevaRelacion = new GeneracionArchivoEtiqueta
+                {
+                    IdConfiguracionGeneracionArchivo = generacionArchivoId,
+                    EtiquetaId = etiquetaId,
+                    FechaCreacion = DateTime.Now
+                };
+
+                _baseContext.GeneracionArchivoEtiqueta.Add(nuevaRelacion);
+                await _baseContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier error y retornar una respuesta de error
+                Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
+                throw;
+            }
+        }
 
 
     }

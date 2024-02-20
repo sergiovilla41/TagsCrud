@@ -51,6 +51,10 @@ namespace Simem.AppCom.Datos.Core
         {
             await repo.DeleteDatosById(id);
         }
+        public async Task AddDatosDtoAsync(ConjuntoDatosDto nuevoConjuntoDatos)
+        {
+            await repo.AddDatosDtoAsync(nuevoConjuntoDatos);
+        }
 
     }
 }

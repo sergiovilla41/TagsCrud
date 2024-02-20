@@ -6,6 +6,6 @@
         public string? Titulo { get; set; }
         public bool Estado { get; set; }
         public string? ConjuntoDeDatosAsociados { get; set; }
-
+        
     }
 }

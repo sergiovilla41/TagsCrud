@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Simem.AppCom.Datos.Core;
 using Simem.AppCom.Datos.Dto;
+using Simem.AppCom.Datos.Repo;
 
 namespace Simem.AppCom.Datos.Servicios.Controllers
 {
@@ -212,6 +213,29 @@ namespace Simem.AppCom.Datos.Servicios.Controllers
             }
             catch (Exception ex)
             {
+                return BadRequest(new { messageError = $"Error: {ex.Message}" });
+            }
+        }
+        /// <summary>
+        /// Se utiliza para crear una etiqueta nueva con el conjunto de datos asociado
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">El conjunto de datos se creó correctamente</response>
+        /// <response code="400">Hubo un error en la petición</response>
+        [HttpPost("Crear")]
+        public async Task<IActionResult> CrearDatos([FromBody] ConjuntoDatosDto nuevoConjuntoDatos)
+        {
+            try
+            {
+                Etiqueta core = new Etiqueta();
+                await core.AddDatosDtoAsync(nuevoConjuntoDatos);
+                return Ok(new { message = "El conjunto de datos se creó correctamente" });
+            }
+            catch (Exception ex)
+            {
+                // Registra la excepción interna para obtener más detalles sobre el error
+                Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
+
                 return BadRequest(new { messageError = $"Error: {ex.Message}" });
             }
         }
