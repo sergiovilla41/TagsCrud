@@ -18,5 +18,6 @@ namespace Simem.AppCom.Datos.Repo
         public Task<List<ConjuntoDatosDto>> GetDatosDtoById(Guid id);
         public Task DeleteDatosById(Guid id);
         public Task AddDatosDtoAsync(ConjuntoDatosDto nuevoConjuntoDatos);
+        public  Task UpdateDatosDto( ConjuntoDatosDto conjuntoDatosActualizado);
     }
 }

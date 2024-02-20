@@ -19,6 +19,6 @@ namespace Simem.AppCom.Datos.Dominio
         public Guid EtiquetaId { get; set; }
         public DateTime FechaCreacion { get; set; }
         public Etiqueta? Etiqueta { get; set; } = null;
-        
+       
     }
 }

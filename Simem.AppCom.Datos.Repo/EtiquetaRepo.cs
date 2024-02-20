@@ -241,6 +241,41 @@ namespace Simem.AppCom.Datos.Repo
                 throw;
             }
         }
+        //Put-Id
+        public async Task UpdateDatosDto(ConjuntoDatosDto conjuntoDatosActualizado)
+        {
+            if (conjuntoDatosActualizado.Id == null || conjuntoDatosActualizado.Id == Guid.Empty)
+            {
+                throw new ArgumentException("Id de novedad no proporcionado o inválido.");
+            }
+
+            var existingData = await _baseContext.GeneracionArchivoEtiqueta
+                .Include(gae => gae.Etiqueta)
+                .FirstOrDefaultAsync(gae => gae.IdConfiguracionGeneracionArchivoxEtiqueta == conjuntoDatosActualizado.Id);
+
+
+            if (existingData == null)
+            {
+                throw new KeyNotFoundException("No se encontró ningún conjunto de datos con el ID proporcionado.");
+            }
+
+            try
+            {
+                // Actualizar los datos necesarios
+                if (conjuntoDatosActualizado.Titulo != null && existingData.Etiqueta != null)
+                {
+                    existingData.Etiqueta.Titulo = conjuntoDatosActualizado.Titulo;
+                }                
+
+                // Guardar los cambios en la base de datos
+                await _baseContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier error y lanzar una excepción
+                throw new FileNotFoundException("Error al actualizar el conjunto de datos.", ex);
+            }
+        }
 
 
     }

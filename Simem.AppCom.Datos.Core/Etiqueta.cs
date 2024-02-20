@@ -55,6 +55,10 @@ namespace Simem.AppCom.Datos.Core
         {
             await repo.AddDatosDtoAsync(nuevoConjuntoDatos);
         }
+        public async Task UpdateDatosDto( ConjuntoDatosDto conjuntoDatosActualizado)
+        {
+            await repo.UpdateDatosDto(conjuntoDatosActualizado);
+        }
 
     }
 }

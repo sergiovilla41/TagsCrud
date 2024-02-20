@@ -239,7 +239,30 @@ namespace Simem.AppCom.Datos.Servicios.Controllers
                 return BadRequest(new { messageError = $"Error: {ex.Message}" });
             }
         }
-
+        /// <summary>
+        /// Se utiliza para actualizar una etiqueta nueva con el conjunto de datos asociado
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">El conjunto de datos se actualizó correctamente</response>
+        /// <response code="400">Hubo un error en la petición</response>
+        [HttpPut("Actualizar")]
+        public async Task<IActionResult> ActualizarDatos(ConjuntoDatosDto conjuntoDatosActualizado)
+        {
+            try
+            {
+                Etiqueta core = new Etiqueta();
+                await core.UpdateDatosDto( conjuntoDatosActualizado);
+                return Ok(new { message = "El conjunto de datos se actualizó correctamente" });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { messageError = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { messageError = $"Error: {ex.Message}" });
+            }
+        }
 
 
     }
