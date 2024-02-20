@@ -32,14 +32,15 @@ namespace Simem.AppCom.Datos.Repo
             try
             {
                 var obj = _baseContext.ConfiguracionVariable.ToList();
-                if(obj != null)
+                if (obj.Count > 0) // Verifica si la lista tiene elementos
                 {
-                   var dto = MapeoDatos.Mapper.Map<List<ConfiguracionVariableDto>>(obj);
-                   lista.AddRange(dto);
+                    var dto = MapeoDatos.Mapper.Map<List<ConfiguracionVariableDto>>(obj);
+                    lista.AddRange(dto);
                 }
-
-            }catch(Exception) {
-             //Devuelva objeto vacio en caso de que falle
+            }
+            catch (Exception)
+            {
+                //Devuelva objeto vacio en caso de que falle
             }
 
 

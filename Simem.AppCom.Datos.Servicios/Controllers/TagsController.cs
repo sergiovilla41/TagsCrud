@@ -175,7 +175,7 @@ namespace Simem.AppCom.Datos.Servicios.Controllers
         /// <summary>
         /// Se utiliza para buscar un conjunto de datos asociados para la etiqueta
         /// </summary>
-        /// <param name="Id">Id de la tabla GeneracionArchivoEtiqueta</param>
+        /// <param name="id">Id de la tabla GeneracionArchivoEtiqueta</param>
         /// <returns></returns>
         /// <response code="200">La consulta correspondiente con el id ingresado</response>
         /// <response code="204">No se encontre informacion</response>
@@ -195,8 +195,7 @@ namespace Simem.AppCom.Datos.Servicios.Controllers
             }
         }
         // <summary>
-        /// Se utiliza para eliminar una etiqueta con el conjunto de datos asociado
-        /// </summary>
+        /// Se utiliza para eliminar una etiqueta con el conjunto de datos asociado       
         /// <param name="id">Id de la tabla GeneracionArchivoEtiqueta</param>
         /// <returns></returns>
         /// <response code="200">El conjunto de datos se eliminó correctamente</response>

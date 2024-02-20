@@ -29,7 +29,7 @@ namespace Simem.AppCom.Datos.Servicios.Controllers
                     idCategoria = Guid.Parse(categoria);
                 }
 
-                Paginador _paginador = JsonConvert.DeserializeObject<Paginador>(paginador) ?? throw new Exception("Paginator is missing");
+                Paginador _paginador = JsonConvert.DeserializeObject<Paginador>(paginador) ?? throw new ArgumentException("Paginator is missing");
                 DatoRepo conjuntoDatosRepo = new();
                 var conjuntosDatos = await conjuntoDatosRepo.GetConjuntosDatos(_paginador, termino, idCategoria);
                 int count = await conjuntoDatosRepo.GetConjuntosDatosCount(_paginador, termino, idCategoria);

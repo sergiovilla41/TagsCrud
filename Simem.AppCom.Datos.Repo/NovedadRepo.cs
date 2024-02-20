@@ -66,14 +66,17 @@ namespace Simem.AppCom.Datos.Repo
                         aux.Add(b);
                     }
                 });
-                aux.ForEach(novedadesEtiquetas =>
+                if (aux.Any())
                 {
-                    if (novedadesEtiquetas.Etiqueta != null)
+                    aux.ForEach(novedadesEtiquetas =>
                     {
-                        etiquetas.Add(novedadesEtiquetas.Etiqueta);
-                    }
+                        if (novedadesEtiquetas.Etiqueta != null)
+                        {
+                            etiquetas.Add(novedadesEtiquetas.Etiqueta);
+                        }
 
-                });
+                    });
+                }
 
                 novedadDetailList.Add(new NovedadDetail() { Novedad = a, Etiquetas = etiquetas });
             });

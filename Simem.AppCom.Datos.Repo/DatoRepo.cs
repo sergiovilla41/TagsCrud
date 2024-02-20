@@ -121,16 +121,17 @@ namespace Simem.AppCom.Datos.Repo
                         aux.Add(b);
                     }
                 });
-
-                aux.ForEach(conjuntoEtiqueta =>
+                if (aux.Any())
                 {
-                if (conjuntoEtiqueta.Etiqueta != null)
-                {
-                    etiquetas.Add(conjuntoEtiqueta.Etiqueta);
-                    }
+                    aux.ForEach(conjuntoEtiqueta =>
+                    {
+                        if (conjuntoEtiqueta.Etiqueta != null)
+                        {
+                            etiquetas.Add(conjuntoEtiqueta.Etiqueta);
+                        }
 
-                });
-
+                    });
+                }
                 conjuntosEtiquetasResult.Add(new GeneracionArchivoCategoriaDto() {
                     IdConfiguracionGeneracionArchivos = a.IdConfiguracionGeneracionArchivos,
                     Titulo = a.Titulo,
@@ -749,11 +750,30 @@ namespace Simem.AppCom.Datos.Repo
         [ExcludeFromCodeCoverage]
         private void generarResultados(ref List<DatoDto> lstDataDto)
         {
-            _ = lstDataDto.All(p => { p.SubTitulo = (p.CategoriaID != null || p.CategoriaID != Guid.Empty) ? obtenerCategory((Guid)p.CategoriaID!).Titulo : ""; return true; });
-            _ = lstDataDto.All(c => { c.LstEnlace = (c.IdConfiguracionGeneracionArchivos != Guid.Empty) ? ObtenerTags(c.IdConfiguracionGeneracionArchivos) : new List<EnlaceDto>(); return true; });
-            _ = lstDataDto.All(p => { p.Periocidad = (p.IdPeriodicidad != null || p.IdPeriodicidad != Guid.Empty) ? ObtenerPeriodicidad((Guid)p.IdPeriodicidad!).Periodicidad : ""; return true; });
-            _ = lstDataDto.All(p => { p.TipoVista = (p.TipoVistaID != null || p.TipoVistaID != Guid.Empty) ? obtenerTypeView((Guid)p.TipoVistaID!) : new TipoVistaDto(); return true; });
+            // SubTitulo
+            lstDataDto = lstDataDto.Where(p => p.CategoriaID != null && p.CategoriaID != Guid.Empty)
+                                    .Select(p => { p.SubTitulo = obtenerCategory((Guid)p.CategoriaID!).Titulo; return p; })
+                                    .ToList();
 
+            // LstEnlace
+            lstDataDto = lstDataDto.Where(c => c.IdConfiguracionGeneracionArchivos != Guid.Empty)
+                            .SelectMany(c =>
+                            {
+                                c.LstEnlace = ObtenerTags(c.IdConfiguracionGeneracionArchivos);
+                                return new List<DatoDto> { c };
+                            })
+                            .Where(x => x.LstEnlace?.Count > 0)
+                            .ToList();
+
+            // Periódicidad
+            lstDataDto = lstDataDto.Where(p => p.IdPeriodicidad != null && p.IdPeriodicidad != Guid.Empty)
+                                    .Select(p => { p.Periocidad = ObtenerPeriodicidad((Guid)p.IdPeriodicidad!).Periodicidad; return p; })
+                                    .ToList();
+
+            // TipoVista
+            lstDataDto = lstDataDto.Where(p => p.TipoVistaID != null && p.TipoVistaID != Guid.Empty)
+                                    .Select(p => { p.TipoVista = obtenerTypeView((Guid)p.TipoVistaID!); return p; })
+                                    .ToList();
         }
 
 

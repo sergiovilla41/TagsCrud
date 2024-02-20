@@ -7,6 +7,7 @@ using Simem.AppCom.Datos.Dto;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -64,8 +65,9 @@ namespace Simem.AppCom.Base.Utils
             var crmStatus = KeyVaultManager.GetSecretValue(KeyVaultTypes.crmStatus);
             var crmWindow = KeyVaultManager.GetSecretValue(KeyVaultTypes.crmWindow);
             ApiCrmDataResult respuestaApi = new ApiCrmDataResult();
-            DateTime primerDiaDelAño = new DateTime(DateTime.Now.Year, 1, 1);
-            DateTime ultimoDiaDelAño = new DateTime(DateTime.Now.Year, 12, 31);
+            DateTime primerDiaDelAño = new DateTime(DateTime.Now.Year, 1, 1, 0, 0, 0, DateTimeKind.Local);
+            DateTime ultimoDiaDelAño = new DateTime(DateTime.Now.Year, 12, 31, 23, 59, 59, DateTimeKind.Local);
+
             ApiCrmParamRequest paramRequest = new ApiCrmParamRequest()
             {
                 session = sessionid,
@@ -194,7 +196,7 @@ namespace Simem.AppCom.Base.Utils
             {
                 if (datosDocumental.records != null)
                 {
-                    var date = DateTime.Parse(datosDocumental.records!.fechaRadicacion!);
+                    var date = DateTime.ParseExact(datosDocumental.records!.fechaRadicacion!, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
                     newDate = date.ToString("yyyy-MM-dd HH:mm:ss");
                     siadRef = datosDocumental.records!.numeroRadicado!;
                 }
